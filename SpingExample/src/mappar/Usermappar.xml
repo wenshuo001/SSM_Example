@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <!--namespace 自己命名 -->
+<mapper namespace="mappar.UserMapper">
+<!--可以提取重复 sql 语句片段-->
+    <sql id="myselect" >
+       select * from user
+
+    </sql>
+
+    <!--查询-->
+    <select id="selectUserById" parameterType="Integer" resultType="bean.User">
+    select * from user where id = #{id}
+    </select>
+
+    <!--模糊查询-->
+    <!--#{} 占位符-->
+    <!--${} 字符串拼接 or 1=1-->
+    <!---->
+    <select id="selectUserByName" parameterType="String" resultType="bean.User">
+    select * from user where name like "%"#{name}"%"
+    </select>
+
+   <!--//新增-->
+    <insert id="insertUser" parameterType="bean.User">
+      insert into user value (#{id},#{name},#{age})
+    </insert>
+
+    <!--修改-->
+    <update id="updatetUser" parameterType="bean.User">
+      update user set name = #{name} where id = #{id}
+    </update>
+
+    <!--删除-->
+    <delete id="delelctUserById" parameterType="Integer">
+      delete from user where id = #{id}
+    </delete>
+
+    <resultMap type="bean.UserVo" id="userVolist">
+        <id property="id" column="id"></id>
+        <id property="name" column="name"></id>
+        <id property="age" column="age"></id>
+        <id property="c_id" column="c_id"></id>
+        <association property="country" javaType="bean.Country">
+            <result property="id" column="id"></result>
+            <result property="c_countryname" column="c_countryname"></result>
+            <result property="c_capital" column="c_capital"></result>
+        </association>
+    </resultMap>
+    <select id="selectAllUserVo" resultMap="userVolist">
+        select u.id,
+        u.name,
+        u.age,
+        u.c_id,
+        c.c_capital,
+        c.c_countryname
+        from user u left join country c on u.c_id= c.id;
+    </select>
+
+
+    <resultMap type="bean.CountryVo" id="countryVo">
+        <id property="id" column="id"></id>
+        <id property="c_countryname" column="c_countryname"></id>
+        <id property="c_capital" column="c_capital"></id>
+        <collection property="userList" ofType="bean.User">
+            <id property="id" column="id"></id>
+            <id property="name" column="name"></id>
+            <id property="age" column="age"></id>
+        </collection>
+    </resultMap>
+    <select id="selectAllCountryVo" resultMap="countryVo">
+        select c.id,
+        c.c_countryname,
+        c.c_capital,
+        u.id,
+        u.name
+        from country c left join user u on u.c_id = c.id;
+    </select>
+    <!-- /*select * from user where age = #{age}
+        AND name like "%"#{name}"%"
+        and c_id = #{c_id}*/-->
+    <!--多条件查询 通过用户对象中的条件查询用户列表-->
+    <select id="selectUserListByUser"  parameterType="bean.User" resultType="bean.User">
+        <!--查询用户性别 模糊查询用户名 查询用户cid 国际ID-->
+        <!--where 标签 解决 And 拼接-->
+        select * from user
+        <where>
+        <if test="age!=null and age!='' " >
+            age = #{age}
+        </if>
+        <if test="name!=null and name!=''">
+            and name like CONCAT('%',#{name},'%')
+        </if>
+        <if test="c_id!=null and c_id!=0 ">
+            and c_id = #{c_id};
+        </if>
+        </where>
+    </select>
+
+
+    <!--修改-->
+    <update id="updatetUserInfo" parameterType="bean.User">
+        <!--set 标签 解决 "," 拼接-->
+        update user
+         <set>
+        <if test="age!=null and age!='' " >
+            age = #{age},
+        </if>
+        <if test="name!=null and name!=''">
+            name = #{name},
+        </if>
+        <if test="c_id!=null and c_id!=0 ">
+            c_id = #{c_id},
+        </if>
+         </set>
+        WHERE  id= #{id};
+    </update>
+    <!--查询多条类型相同的数据-->
+
+    <select id="selectUserListByIds" resultType="bean.User">
+
+
+    </select>
+
+    <!--动态 sql 遍历数组集合  数组用array 集合用list -->
+    <select id="getUserByIds" resultType="bean.User"  >
+        <include refid="myselect"/>
+        where id in
+       <foreach collection="list" separator="," item="id" open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

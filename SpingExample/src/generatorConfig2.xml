@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <environments default="development">
+        <environment id="development">
+            <!--使用jdbc事物-->
+            <transactionManager type="JDBC">
+            </transactionManager>
+            <!--使用连接池连接数据库-->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/ssm_database?
+                useUnicode=true&amp;characterEncoding=UTF8&amp;characterSetResults=utf8"/>
+                <property name="username" value="root"/>
+                <property name="password" value=""/>
+            </dataSource>
+        </environment>
+    </environments>
+     <mappers>
+         <mapper resource="mbgmappar/UserMapper.xml"/>
+         <mapper resource="mbgmappar/CountryMapper.xml"/>
+         <mapper resource="mappar/Usermappar.xml"/>
+         <mapper resource="mbgmappar/UserMapper.xml"/>
+         <mapper resource="mbgmappar/CountryMapper.xml"/>
+     </mappers>
+</configuration>
