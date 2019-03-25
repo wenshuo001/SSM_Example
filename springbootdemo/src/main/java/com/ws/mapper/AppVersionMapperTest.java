@@ -21,8 +21,11 @@ public class AppVersionMapperTest {
 
     @Test
     public void testQuery(){
-       List<AppVersion> version = appVersionMapper.selectAll();
-        System.out.println("app_info"+version.toString());
+        AppVersion version =new AppVersion();
+        version.setApp_is_beta(0);
+       // AppVersion  version=appVersionMapper.selectByPrimaryKey(1);
+       List<AppVersion> versions = appVersionMapper.select(version);
+        System.out.println("app_info"+versions.toString());
     }
 
 }
