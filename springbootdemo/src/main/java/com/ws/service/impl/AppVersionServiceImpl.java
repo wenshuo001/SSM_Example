@@ -1,26 +1,33 @@
 package com.ws.service.impl;
 
+import com.ws.bean.AppInfo;
 import com.ws.bean.AppVersion;
+import com.ws.mapper.AppInfoMapper;
 import com.ws.mapper.AppVersionMapper;
 import com.ws.service.AppVersionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
+@Service("appVersionService")
 public class AppVersionServiceImpl implements AppVersionService {
 
     @Autowired
-    private AppVersionMapper appVersionMapper;
-
+    private AppInfoMapper appInfoMapper;
     @Override
-    public List<AppVersion> getTeacherVersion(int app_is_beta, int pageNum) {
-       // List<AppVersion>  appVersions= appVersionMapper.
+    public List<AppInfo> getTeacherVersion(int app_is_beta, int pageNum) {
 
-        return null;
+        Example example = new Example(AppInfo.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("appIsBeta", app_is_beta);
+        List<AppInfo> list = appInfoMapper.selectByExample(example);
+        return list;
     }
 
     @Override
-    public List<AppVersion> getParentsVersion(int app_is_beta, int pageNum) {
+    public List<AppInfo> getParentsVersion(int app_is_beta, int pageNum) {
         return null;
     }
 }

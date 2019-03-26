@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ws.mapper.AppInfoMapper">
+  <resultMap id="BaseResultMap" type="com.ws.bean.AppInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="app_name" jdbcType="VARCHAR" property="appName" />
+    <result column="app_img" jdbcType="VARCHAR" property="appImg" />
+    <result column="app_download_path" jdbcType="VARCHAR" property="appDownloadPath" />
+    <result column="app_is_beta" jdbcType="INTEGER" property="appIsBeta" />
+    <result column="app_isPorT" jdbcType="INTEGER" property="appIsport" />
+    <result column="app_uploadTime" jdbcType="VARCHAR" property="appUploadtime" />
+    <result column="app_version_code" jdbcType="VARCHAR" property="appVersionCode" />
+    <result column="app_version_name" jdbcType="VARCHAR" property="appVersionName" />
+  </resultMap>
+</mapper>

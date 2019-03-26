@@ -1,20 +1,33 @@
 package com.ws.web;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ws.bean.AppVersion;
-import org.springframework.web.bind.annotation.RestController;
+import com.ws.service.AppVersionService;
+import com.ws.util.JsonResult;
+import com.ws.util.fastJsonConfig;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 public class AppVersionControll {
 
+    @Autowired
+    private AppVersionService appVersionService;
 
-    public void getTeacherVersion(int app_is_beta, int pageNum) {
-
+    @ResponseBody
+    @GetMapping("teacherVersion")
+    public String getTeacherVersion(int app_is_beta, int pageNum) {
+        JsonResult result=new JsonResult();
+        result.setCode("200");
+        result.setMsg("成功");
+        result.setData(appVersionService.getTeacherVersion(1,1));
+        return JSONObject.toJSONString(result);
     }
 
 
-    public  void getParentsVersion(int app_is_beta, int pageNum) {
+    public void getParentsVersion(int app_is_beta, int pageNum) {
 
     }
 }
