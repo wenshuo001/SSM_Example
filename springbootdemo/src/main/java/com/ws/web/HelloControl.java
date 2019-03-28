@@ -23,12 +23,12 @@ public class HelloControl {
 
 
     @GetMapping("hello.do")
-    public String hello() {
+    public JsonResult hello() {
         JsonResult result = new JsonResult();
         result.setCode("200");
         result.setMsg("成功");
         result.setData(appVersionService.getTeacherVersion(1, 1));
-        return JSONObject.toJSONString(result);
+        return result;
     }
 
 }
