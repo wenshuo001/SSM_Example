@@ -1,4 +1,4 @@
-package com.ws.config;
+package com.ws.util;
 
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
