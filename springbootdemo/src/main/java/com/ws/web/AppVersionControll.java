@@ -17,11 +17,11 @@ public class AppVersionControll {
 
     @ResponseBody
     @GetMapping("app_version")
-    public JsonResult getTeacherVersion(String data) {
+    public JsonResult getTeacherVersion(String app_isPorT,String app_is_beta) {
         JsonResult result=new JsonResult();
         result.setCode("200");
         result.setMsg("成功");
-        result.setData(appVersionService.getTeacherVersion(1,1));
+        result.setData(appVersionService.getTeacherVersion(Integer.parseInt(app_is_beta),Integer.parseInt(app_isPorT)));
         System.out.println("成功lalalalala");
         return result;
     }

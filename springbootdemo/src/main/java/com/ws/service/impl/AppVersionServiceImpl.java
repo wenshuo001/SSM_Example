@@ -17,11 +17,11 @@ public class AppVersionServiceImpl implements AppVersionService {
     @Autowired
     private AppInfoMapper appInfoMapper;
     @Override
-    public List<AppInfo> getTeacherVersion(int app_is_beta, int pageNum) {
+    public List<AppInfo> getTeacherVersion(int app_is_beta, int app_isPorT) {
 
         Example example = new Example(AppInfo.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("appIsBeta", app_is_beta);
+        criteria.andEqualTo("appIsBeta", app_is_beta).andEqualTo("appIsport",app_isPorT);
         List<AppInfo> list = appInfoMapper.selectByExample(example);
         return list;
     }
